@@ -1,6 +1,9 @@
 const User = require("../models/User");
 const OTP = require("../models/OTP");
 const otpGenerator = require("otp-generator");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 //send otp
 exports.sendOTP = async(req,res)=>{
@@ -61,7 +64,8 @@ exports.sendOTP = async(req,res)=>{
 
 //signup
 exports.signUp = async(req,res)=>{
-    //data fetch from request body
+    try{
+        //data fetch from request body
     const{
         firstName,
         lastName,
@@ -115,4 +119,99 @@ exports.signUp = async(req,res)=>{
             message:"Invalid OTP",
         });
     }
+    //password hashing
+    const hashedPassword  = await bcrypt.hash(password,10);
+
+    //entry create in DB
+    const profileDetails  =await Profile.create({
+        gender:null,
+        dateOfBirth:null,
+        about:null,
+        contactNumber:null,
+    });
+    const user = await User.create({
+        firstName,
+        lastName,
+        email,
+        contactNumber,
+        password:hashedPassword,
+        accountType,
+        additionalDetails:profileDetails._id,
+        image:`https://api.dicebar.com/5.x/initials/svg?seed=${firstName} ${lastName}`
+    });
+    //return res
+    return res.status(200).json({
+        success:true,
+        message:"User is registered successfully"
+    })
+    }
+    catch(error){
+        return res.status(500).json({
+            success:false,
+            message:"User cannot be registered, please try again"
+        })
+    }
 }
+
+//Login
+exports.login = async (req, res) => {
+    try {
+        //get data from req body
+        const {email, password} = req.body;
+        // validation data
+        if(!email || !password) {
+            return res.status(403). json({
+                success:false,
+                message:'All fields are required, please try again',
+            });
+        }
+        //user check exist or not
+        const user = await User.findOne({email}).populate("additionalDetails");
+        if(!user) {
+            return res.status(401).json({
+                success:false,
+                message:"User is not registrered, please signup first",
+            });
+        }
+        //generate JWT, after password matching
+        if(await bcrypt.compare(password, user.password)) {
+            const payload = {
+                email: user.email,
+                id: user._id,
+                accountType:user.accountType,
+            }
+            const token = jwt.sign(payload, process.env.JWT_SECRET, {
+                expiresIn:"2h",
+            });
+            user.token = token;
+            user.password= undefined;
+
+            //create cookie and send response
+            const options = {
+                expires: new Date(Date.now() + 3*24*60*60*1000),
+                httpOnly:true,
+            }
+            res.cookie("token", token, options).status(200).json({
+                success:true,
+                token,
+                user,
+                message:'Logged in successfully',
+            })
+
+        }
+        else {
+            return res.status(401).json({
+                success:false,
+                message:'Password is incorrect',
+            });
+        }
+        
+    }
+    catch(error) {
+        console.log(error);
+        return res.status(500).json({
+            success:false,
+            message:'Login Failure, please try again',
+        });
+    }
+};
