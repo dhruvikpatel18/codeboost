@@ -36,8 +36,9 @@ exports.updateProfile = async (req, res) => {
 exports.deleteAccount = async (req, res) => {
 	try {
 		
-		// console.log(job);
+		console.log("Printing ID: ", req.user.id);
 		const id = req.user.id;
+		
 		const user = await User.findById({ _id: id });
 		if (!user) {
 			return res.status(404).json({
@@ -46,10 +47,10 @@ exports.deleteAccount = async (req, res) => {
 			});
 		}
 		// Delete Assosiated Profile with the User
-		await Profile.findByIdAndDelete({ _id: user.userDetails });
-		// TODO: Unenroll User From All the Enrolled Courses
+		await Profile.findByIdAndDelete({ _id: user.additionalDetails });
+		
 		// Now Delete User
-		await user.findByIdAndDelete({ _id: id });
+		await User.findByIdAndDelete({ _id: id });
 		res.status(200).json({
 			success: true,
 			message: "User deleted successfully",
@@ -61,6 +62,7 @@ exports.deleteAccount = async (req, res) => {
 			.json({ success: false, message: "User Cannot be deleted successfully" });
 	}
 };
+
 
 exports.getAllUserDetails = async (req, res) => {
 	try {
