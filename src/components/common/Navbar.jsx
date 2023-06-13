@@ -45,6 +45,7 @@ const Navbar = () => {
 
 
     useEffect( () => {
+        console.log("PRINTING TOKEN", token);
         fetchSublinks();
     },[] )
 
