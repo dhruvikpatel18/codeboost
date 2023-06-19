@@ -5,10 +5,13 @@ const User = require("../models/User");
 //auth
 exports.auth = async (req, res, next) => {
     try{
+
+        console.log("BEFORE ToKEN EXTRACTION");
         //extract token
         const token = req.cookies.token 
                         || req.body.token 
-                        || req.header("Authorisation").replace("Bearer ", "");
+                        || req.header("Authorization").replace("Bearer ", "");
+        console.log("AFTER ToKEN EXTRACTION");
 
         //if token missing, then return response
         if(!token) {
@@ -83,7 +86,8 @@ exports.isInstructor = async (req, res, next) => {
 
 //isAdmin
 exports.isAdmin = async (req, res, next) => {
-    try{
+    try{    
+           console.log("Printing AccountType ", req.user.accountType);
            if(req.user.accountType !== "Admin") {
                return res.status(401).json({
                    success:false,
