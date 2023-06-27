@@ -14,18 +14,18 @@ const timeline = [
     },
     {
         Logo: Logo2,
-        heading: "Leadership",
-        Description:"Fully committed to the success company",
+        heading: "Responsibility",
+        Description:"Students will always be our top priority",
     },
     {
         Logo: Logo3,
-        heading: "Leadership",
-        Description:"Fully committed to the success company",
+        heading: "Flexibility",
+        Description:"The ability to switch is an important skills",
     },
     {
         Logo: Logo4,
-        heading: "Leadership",
-        Description:"Fully committed to the success company",
+        heading: "Solve the problem",
+        Description:"Code your way to a solution",
     },
 ];
 

@@ -100,13 +100,13 @@ const Home = () => {
                 position={"lg:flex-row-reverse"}
                 heading={
                     <div className='text-4xl font-semibold'>
-                        Unlock Your
-                        <HighlightText text={"coding potential"}/>
-                        with our online courses
+                        Start
+                        <HighlightText text={"coding in Seconds"}/>
+                    
                     </div>
                 }
                 subheading = {
-                    "Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."
+                    "Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson."
                 }
                 ctabtn1={
                     {
@@ -167,7 +167,7 @@ const Home = () => {
 
                     <div className='flex flex-col gap-10 w-[40%] items-start'>
                     <div className='text-[16px]'>
-                    The modern StudyNotion is the dictates its own terms. Today, to be a competitive specialist requires more than professional skills.
+                    The modern CodeBoost is the dictates its own terms. Today, to be a competitive specialist requires more than professional skills.
                     </div>
                     <CTAButton active={true} linkto={"/signup"}>
                         <div>
