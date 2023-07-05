@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
-		origin:"http://localhost:3000",
+		origin:"https://codeboost-frontend-dhruvikpatel18.vercel.app/",
 		credentials:true,
 	})
 )
