@@ -42,7 +42,7 @@ app.use("/api/v1/reach", contactUsRoute);
 //def route
 
 app.get("/", (req, res) => {
-	res.header("Access-Control-Allow-Origin", "https://codeboost-ten.vercel.app/");
+	res.header("Access-Control-Allow-Origin", "*");
 });
 
 app.listen(PORT, () => {
