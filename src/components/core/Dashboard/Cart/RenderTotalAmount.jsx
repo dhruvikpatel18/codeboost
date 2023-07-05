@@ -24,7 +24,7 @@ export default function RenderTotalAmount() {
         text="Buy Now"
         onclick={handleBuyCourse}
         customClasses="w-full justify-center"
-      /> 
+      />
     </div>
   )
 }
