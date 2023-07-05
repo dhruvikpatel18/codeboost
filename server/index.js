@@ -21,7 +21,12 @@ database.connect();
 //middlewares
 app.use(express.json());
 app.use(cookieParser());
-
+app.use(
+	cors({
+		origin:"https://codeboost-ten.vercel.app/",
+		credentials:true,
+	})
+)
 
 app.use(
 	fileUpload({
@@ -42,7 +47,10 @@ app.use("/api/v1/reach", contactUsRoute);
 //def route
 
 app.get("/", (req, res) => {
-	res.header("Access-Control-Allow-Origin", "*");
+	return res.json({
+		success:true,
+		message:'Your server is up and running....'
+	});
 });
 
 app.listen(PORT, () => {
