@@ -42,11 +42,7 @@ app.use("/api/v1/reach", contactUsRoute);
 //def route
 
 app.get("/", (req, res) => {
-	return res.json({
-		res.header("Access-Control-Allow-Origin","https://codeboost-ten.vercel.app"),
-		success:true,
-		message:'Your server is up and running....'
-	});
+	res.header("Access-Control-Allow-Origin", "https://codeboost-ten.vercel.app/");
 });
 
 app.listen(PORT, () => {
