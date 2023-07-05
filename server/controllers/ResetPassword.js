@@ -25,7 +25,7 @@ exports.resetPasswordToken = async (req, res) => {
 		);
 		console.log("DETAILS", updatedDetails);
 
-		const url = `https://codeboost-frontend-dhruvikpatel18.vercel.app/update-password/${token}`;
+		const url = `https://codeboost-ten.vercel.app/update-password/${token}`;
 
 		await mailSender(
 			email,
