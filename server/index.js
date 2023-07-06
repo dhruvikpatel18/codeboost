@@ -23,17 +23,17 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
-		origin:"https://codeboost-ten.vercel.app/",
+		origin:"*",
 		credentials:true,
 	})
-)
+);
 
 app.use(
 	fileUpload({
 		useTempFiles:true,
-		tempFileDir:"/tmp",
+		tempFileDir:"/tmp/",
 	})
-)
+);
 //cloudinary connection
 cloudinaryConnect();
 
@@ -55,4 +55,4 @@ app.get("/", (req, res) => {
 
 app.listen(PORT, () => {
 	console.log(`App is running at ${PORT}`)
-})
+});
