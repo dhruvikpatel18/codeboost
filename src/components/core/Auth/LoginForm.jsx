@@ -2,7 +2,8 @@ import { useState } from "react"
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
-
+import reCAPTCHA from "react-google-recaptcha"
+import React, { useRef } from 'react';
 import { login } from "../../../services/operations/authAPI"
 
 function LoginForm() {
@@ -26,9 +27,11 @@ function LoginForm() {
 
   const handleOnSubmit = (e) => {
     e.preventDefault()
+    const token = captchaRef.current.getValue();
+    captchaRef.current.reset();
     dispatch(login(email, password, navigate))
   }
-
+const captchaRef = useRef(null)
   return (
     <form
       onSubmit={handleOnSubmit}
@@ -83,6 +86,10 @@ function LoginForm() {
           </p>
         </Link>
       </label>
+      
+      <reCAPTCHA 
+        sitekey={process.env.REACT_APP_SITE_KEY}
+        ref={captcaRef}/>
       <button
         type="submit"
         className="mt-6 rounded-[8px] bg-yellow-50 py-[8px] px-[12px] font-medium text-richblack-900"
